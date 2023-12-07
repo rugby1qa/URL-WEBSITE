@@ -45,22 +45,24 @@ function updateHistoryDisplay() {
     const historyContainer = document.getElementById('history');
     historyContainer.innerHTML = '';
 
-    // Retrieve history from local storage
     const history = JSON.parse(localStorage.getItem('urlShortenerHistory')) || [];
 
-    // Display each entry in reverse order (from most recent to oldest)
-    for (let i = history.length - 1; i >= 0; i--) {
-        const entry = history[i];
-        historyContainer.innerHTML += `
-            <div>
-                <strong>Original URL:</strong> <br>${formatText(entry.originalUrl)}<br>
-                <strong>Shortened URL:</strong> <a href="${entry.shortUrl}" target="_blank">${entry.shortUrl}</a>
-                <button onclick="confirmDelete(${i})" class="delete-button">X</button>
-            </div>
-            <hr>
-        `;
+    if (history.length === 0) {
+        historyContainer.innerHTML = '<p>No history available</p>';
+    } else {
+        history.forEach((entry, index) => {
+            historyContainer.innerHTML += `
+                <div>
+                    <strong>Original URL:</strong> <br>${formatText(entry.originalUrl)}<br>
+                    <strong>Shortened URL:</strong> <a href="${entry.shortUrl}" target="_blank">${entry.shortUrl}</a>
+                    <button onclick="confirmDelete(${index})">X</button>
+                </div>
+                <hr>
+            `;
+        });
     }
 }
+
 
 
 // Function to confirm deletion
