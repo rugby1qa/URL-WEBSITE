@@ -45,12 +45,14 @@ function updateHistoryDisplay() {
     const historyContainer = document.getElementById('history');
     historyContainer.innerHTML = '';
 
+    // Retrieve history from local storage
     const history = JSON.parse(localStorage.getItem('urlShortenerHistory')) || [];
 
     if (history.length === 0) {
         historyContainer.innerHTML = '<p>No history available</p>';
     } else {
-        history.forEach((entry, index) => {
+        // Reverse the order and display each entry in the history with delete button
+        history.reverse().forEach((entry, index) => {
             historyContainer.innerHTML += `
                 <div>
                     <strong>Original URL:</strong> <br>${formatText(entry.originalUrl)}<br>
@@ -62,6 +64,7 @@ function updateHistoryDisplay() {
         });
     }
 }
+
 
 
 
